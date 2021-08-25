@@ -52,7 +52,7 @@ public class bulletin_board {
 			}
 
 			else if (command.equals("article list")) {
-				
+
 				if (articles.size() == 0) {
 					System.out.println("There's no article\n");
 					continue;
@@ -72,34 +72,62 @@ public class bulletin_board {
 				// split : split(" ") 스페이스바를 기준으로 문장을 쪼갠다. Hi I'm se. --> "Hi", "I'm", "se"
 
 				String[] commandBits = command.split(" ");
-				
+
 				int id = Integer.parseInt(commandBits[2]); // String type을 integer type으로 바꿈
 
-				//boolean found = false;
+				// boolean found = false;
 				Article foundArticle = null;
 
 				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 
 					if (article.id == id) {
-						//found = true;
+						// found = true;
 						foundArticle = article;
 						break;
 					}
 				}
-				
+
 				if (foundArticle == null) {
-					System.out.printf("There is NO [%d article] in the board.\n", id);
+					System.out.printf("There's no [%d article] in the board.\n", id);
 					continue;
-					
+
 				} else {
-					System.out.printf("|||Number: %d\n", foundArticle.id);
-					System.out.printf("|||Title : %s\n", foundArticle.title);
-					System.out.printf("|||Body  : %s\n", foundArticle.body);
+					System.out.printf("|Number: %d\n", foundArticle.id);
+					System.out.printf("|Date : 2021-12-12 12:12:12\n", foundArticle.title);
+					System.out.printf("|Title : %s\n", foundArticle.title);
+					System.out.printf("|Body  : %s\n", foundArticle.body);
 				}
+			} else if (command.startsWith("article delete ")) {
+
+				String[] commandBits = command.split(" ");
+
+				int id = Integer.parseInt(commandBits[2]); // String type을 integer type으로 바꿈
+
+				Article foundArticle = null;
+				//int foundIndex = -1; //nonsense..
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					//The situation often occurs when index number of Array list and typed id is not same. 
+					//To solve this situation, maybe I can find index first and delete articles based on index number?
+					if (article.id == id) {
+						foundArticle = article;
+						//foundIndex = i;
+						break;
+					}
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("There's no [%d article] in the board.\n", id);
+					continue;
+
+				} 
 			}
+
 			else {
 				System.out.printf("%s is invalid order. Try again\n", command);
+
 			}
 		}
 		scan.close();
