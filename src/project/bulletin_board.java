@@ -72,17 +72,14 @@ public class bulletin_board {
 				// split : split(" ") 스페이스바를 기준으로 문장을 쪼갠다. Hi I'm se. --> "Hi", "I'm", "se"
 
 				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]); // "1" -> 1
 
-				int id = Integer.parseInt(commandBits[2]); // String type을 integer type으로 바꿈
-
-				// boolean found = false;
 				Article foundArticle = null;
 
-				for (int i = 0; i < articles.size(); i++) {
+				for (int i = 0; i < articles.size(); i++) { // 0 1 2 3 4
 					Article article = articles.get(i);
 
 					if (article.id == id) {
-						// found = true;
 						foundArticle = article;
 						break;
 					}
@@ -104,25 +101,36 @@ public class bulletin_board {
 
 				int id = Integer.parseInt(commandBits[2]); // String type을 integer type으로 바꿈
 
-				Article foundArticle = null;
-				//int foundIndex = -1; //nonsense..
+				// Article foundArticle = null;
+				int foundIndex; // nonsense..
 
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					//The situation often occurs when index number of Array list and typed id is not same. 
-					//To solve this situation, maybe I can find index first and delete articles based on index number?
+				for (foundIndex = 0; foundIndex < articles.size(); foundIndex++) {
+					Article article = articles.get(foundIndex);
+					// System.out.println("article size: "+articles.size());
+
+					// The situation often occurs when index number of Array list and the typed id
+					// is
+					// not same.
+					// To solve this situation, maybe I can find index first and delete articles
+					// based on the index number..
 					if (article.id == id) {
-						foundArticle = article;
-						//foundIndex = i;
+						// foundArticle = article;
+						// foundIndex = i;
+						articles.remove(foundIndex);
+						System.out.println("article size: " + articles.size());
+						System.out.printf("Number %d article is deleted\n", id);
 						break;
 					}
 				}
+//				System.out.println(foundIndex);
+//				System.out.println(articles.size());
 
-				if (foundArticle == null) {
+				if (foundIndex >= articles.size()) {
+
 					System.out.printf("There's no [%d article] in the board.\n", id);
 					continue;
 
-				} 
+				}
 			}
 
 			else {
