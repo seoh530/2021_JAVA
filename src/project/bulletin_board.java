@@ -10,7 +10,7 @@ public class bulletin_board {
 		System.out.println("===Program Start===");
 
 		Scanner scan = new Scanner(System.in);
-		
+
 		int lastArticleId = 0;
 
 		List<Article> articles = new ArrayList<>();
@@ -71,7 +71,7 @@ public class bulletin_board {
 			} else if (command.startsWith("article detail ")) {
 				// starts with: !로 시작해라.
 				// split : split(" ") 스페이스바를 기준으로 문장을 쪼갠다. Hi I'm se. --> "Hi", "I'm", "se"
-				
+
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]); // "1" -> 1
 
@@ -102,8 +102,8 @@ public class bulletin_board {
 
 				int id = Integer.parseInt(commandBits[2]); // String type을 integer type으로 바꿈
 
-				// Article foundArticle = null; --> article detail 
-				int foundIndex; 
+				// Article foundArticle = null; --> article detail
+				int foundIndex;
 
 				for (foundIndex = 0; foundIndex < articles.size(); foundIndex++) {
 					Article article = articles.get(foundIndex);
@@ -113,7 +113,7 @@ public class bulletin_board {
 					// To solve this situation, I need to find the index number first and delete
 					// articles
 					// based on the index number..
-					
+
 					if (article.id == id) {
 						// foundArticle = article;
 						// foundIndex = i;
@@ -128,16 +128,52 @@ public class bulletin_board {
 					continue;
 
 				}
+			} else if (command.startsWith("article modify ")) {
+
+				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]);
+
+				Article foundArticle = null;
+
+				for (int i = 0; i < articles.size(); i++) { // 0 1 2 3 4
+					Article article = articles.get(i);
+
+					if (article.id == id) {
+						foundArticle = article;
+						break;
+					}
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("There's no [%d article] in the board.\n", id);
+					continue;
+				}
+				
+				System.out.print("Title: ");
+				String title = scan.nextLine();
+				System.out.print("Body: ");
+				String body = scan.nextLine();
+				String date = util.getNowDate();
+				
+				foundArticle.title = title;
+				foundArticle.body = body;
+				foundArticle.date = date;
+				
+				System.out.printf("Number %d article modification is completed.\n",foundArticle.id);
+				
+				
 			}
 
 			else {
 				System.out.printf("%s is invalid order. Try again\n", command);
 			}
-		}//while fin.
+
+		} // while fin.
+
 		scan.close();
 		System.out.println("===Program End===");
 	}
-}//main class fin.
+}// main class fin.
 
 class Article {
 
