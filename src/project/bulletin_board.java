@@ -41,7 +41,7 @@ public class bulletin_board {
 				System.out.print("Body: ");
 				String body = scan.nextLine();
 				String date = util.getNowDate();
-
+	
 				Article article = new Article(id, title, body, date);
 
 				articles.add(article);
@@ -65,12 +65,13 @@ public class bulletin_board {
 					// array list 안에는 0부터 n까지 이므로 integer i의 사이즈는 n+1. 그러므로 최대 사이즈는 n-1로 설정해야함.
 					Article article = articles.get(i);
 
-					System.out.printf("Id:%d,  Title:%s\n Date:", article.id, article.title);
+					System.out.printf("Id:%d,  Title:%s  Hit: %d\n", article.id, article.title, article.hit);
 				}
 
 			} else if (command.startsWith("article detail ")) {
 				// starts with: !로 시작해라.
 				// split : split(" ") 스페이스바를 기준으로 문장을 쪼갠다. Hi I'm se. --> "Hi", "I'm", "se"
+				
 
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]); // "1" -> 1
@@ -89,13 +90,18 @@ public class bulletin_board {
 				if (foundArticle == null) {
 					System.out.printf("There's no [%d article] in the board.\n", id);
 					continue;
+					
+					//foundArticle.increase_hit();
 
 				} else {
+					foundArticle.increase_hit();
 					System.out.printf("|Number: %d\n", foundArticle.id);
 					System.out.printf("|Date  : %s\n", foundArticle.date);
 					System.out.printf("|Title : %s\n", foundArticle.title);
 					System.out.printf("|Body  : %s\n", foundArticle.body);
+					System.out.printf("|Hit   : %d\n", foundArticle.hit);
 				}
+				
 			} else if (command.startsWith("article delete ")) {
 
 				String[] commandBits = command.split(" ");
@@ -108,7 +114,7 @@ public class bulletin_board {
 				for (foundIndex = 0; foundIndex < articles.size(); foundIndex++) {
 					Article article = articles.get(foundIndex);
 
-					// The situation often occurs when index number of Array list and the id
+					// There's a situation that the index number of Array list and the id
 					// is not same.
 					// To solve this situation, I need to find the index number first and delete
 					// articles
@@ -160,8 +166,6 @@ public class bulletin_board {
 				foundArticle.date = date;
 				
 				System.out.printf("Number %d article modification is completed.\n",foundArticle.id);
-				
-				
 			}
 
 			else {
@@ -178,6 +182,7 @@ public class bulletin_board {
 class Article {
 
 	int id;
+	int hit;
 	String title;
 	String body;
 	String date;
@@ -187,7 +192,11 @@ class Article {
 		this.title = title;
 		this.body = body;
 		this.date = date;
-
+		this.hit = 0;
+	}
+	
+	public void increase_hit() {
+		hit++;
 	}
 
 }
