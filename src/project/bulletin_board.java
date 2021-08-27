@@ -5,15 +5,19 @@ import java.util.*;
 
 public class bulletin_board {
 
-	public static void main(String[] args) {
+	private static List<Article> articles;
+
+	static {
+		articles = new ArrayList<>();
+	}
+
+	public static void main(String[] args) { // static은 static 끼리만 교류가
 
 		System.out.println("===Program Start===");
 
+		makeTestData();
+
 		Scanner scan = new Scanner(System.in);
-
-		int lastArticleId = 0;
-
-		List<Article> articles = new ArrayList<>();
 
 		while (true) {
 			System.out.printf("\nEnter your order: ");
@@ -33,15 +37,14 @@ public class bulletin_board {
 			}
 			if (command.equals("article write")) {
 
-				int id = lastArticleId + 1;
-				lastArticleId = id;
-
+				int id = articles.size() + 1;
+				
 				System.out.print("Title: ");
 				String title = scan.nextLine();
 				System.out.print("Body: ");
 				String body = scan.nextLine();
 				String date = util.getNowDate();
-	
+
 				Article article = new Article(id, title, body, date);
 
 				articles.add(article);
@@ -65,13 +68,12 @@ public class bulletin_board {
 					// array list 안에는 0부터 n까지 이므로 integer i의 사이즈는 n+1. 그러므로 최대 사이즈는 n-1로 설정해야함.
 					Article article = articles.get(i);
 
-					System.out.printf("Id:%d,  Title:%s  Hit: %d\n", article.id, article.title, article.hit);
+					System.out.printf("Id:%d,    Title:%s       Hit: %d\n", article.id, article.title, article.hit);
 				}
 
 			} else if (command.startsWith("article detail ")) {
 				// starts with: !로 시작해라.
 				// split : split(" ") 스페이스바를 기준으로 문장을 쪼갠다. Hi I'm se. --> "Hi", "I'm", "se"
-				
 
 				String[] commandBits = command.split(" ");
 				int id = Integer.parseInt(commandBits[2]); // "1" -> 1
@@ -90,8 +92,8 @@ public class bulletin_board {
 				if (foundArticle == null) {
 					System.out.printf("There's no [%d article] in the board.\n", id);
 					continue;
-					
-					//foundArticle.increase_hit();
+
+					// foundArticle.increase_hit();
 
 				} else {
 					foundArticle.increase_hit();
@@ -101,7 +103,7 @@ public class bulletin_board {
 					System.out.printf("|Body  : %s\n", foundArticle.body);
 					System.out.printf("|Hit   : %d\n", foundArticle.hit);
 				}
-				
+
 			} else if (command.startsWith("article delete ")) {
 
 				String[] commandBits = command.split(" ");
@@ -154,18 +156,18 @@ public class bulletin_board {
 					System.out.printf("There's no [%d article] in the board.\n", id);
 					continue;
 				}
-				
+
 				System.out.print("Title: ");
 				String title = scan.nextLine();
 				System.out.print("Body: ");
 				String body = scan.nextLine();
 				String date = util.getNowDate();
-				
+
 				foundArticle.title = title;
 				foundArticle.body = body;
 				foundArticle.date = date;
-				
-				System.out.printf("Number %d article modification is completed.\n",foundArticle.id);
+
+				System.out.printf("Number %d article modification is completed.\n", foundArticle.id);
 			}
 
 			else {
@@ -176,6 +178,15 @@ public class bulletin_board {
 
 		scan.close();
 		System.out.println("===Program End===");
+	}
+
+	private static void makeTestData() {
+		System.out.println("Create data for the test.");
+
+		articles.add(new Article(1, "title", "body", util.getNowDate(), 11));
+		articles.add(new Article(2, "title", "body", util.getNowDate(), 22));
+		articles.add(new Article(3, "title", "body", util.getNowDate(), 33));
+
 	}
 }// main class fin.
 
@@ -188,13 +199,17 @@ class Article {
 	String date;
 
 	public Article(int id, String title, String body, String date) {
+		this(id, title, body, date, 0);
+	}
+
+	public Article(int id, String title, String body, String date, int hit) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.date = date;
-		this.hit = 0;
+		this.hit = hit;
 	}
-	
+
 	public void increase_hit() {
 		hit++;
 	}
