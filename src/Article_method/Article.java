@@ -1,12 +1,12 @@
-package project;
+package Article_method;
 
-class Article {
+public class Article {
 
-	int id;
-	int hit;
-	String title;
-	String body;
-	String date;
+	public int id;
+	public int hit;
+	public String title;
+	public String body;
+	public String date;
 
 	public Article(int id, String title, String body, String date) {
 		this(id, title, body, date, 0);

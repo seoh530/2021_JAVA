@@ -1,7 +1,11 @@
 package project;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import Article_method.Article;
+import util.util;
 
 public class bulletin_board {
 
@@ -189,29 +193,3 @@ public class bulletin_board {
 
 	}
 }// main class fin.
-
-class Article {
-
-	int id;
-	int hit;
-	String title;
-	String body;
-	String date;
-
-	public Article(int id, String title, String body, String date) {
-		this(id, title, body, date, 0);
-	}
-
-	public Article(int id, String title, String body, String date, int hit) {
-		this.id = id;
-		this.title = title;
-		this.body = body;
-		this.date = date;
-		this.hit = hit;
-	}
-
-	public void increase_hit() {
-		hit++;
-	}
-
-}
